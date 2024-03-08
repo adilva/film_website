@@ -1,0 +1,75 @@
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color:lightgrey;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/" style="color:firebrick; font-family:cursive;">AV CINEMA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item" style="margin-top: 4px;">
+            <a class="nav-link active" style="color: black;" aria-current="page" href="/">Home</a>
+          </li>
+
+          <li class="nav-item" style="margin-top: 4px;">
+            <a class="nav-link" style="color: black;" href="#">Reviews</a>
+          </li>
+         
+          <li class="nav-item dropdown {% if 'filmapp' in request.path %} active {% endif %}">
+            <a class="nav-link dropdown-toggle" style="margin-top: 4px; color: black;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Movie
+            </a>
+            <ul class="dropdown-menu" style="background-color: lightgrey;">
+              <li><a class="dropdown-item" href="{% url 'filmapp:allProdCat' %}">All Movies</a></li>
+              
+              <li><hr class="dropdown-divider"></li>
+          {% for cat in links %}
+              <li><a class="dropdown-item" style="color: black;" href="{{cat.get_url}}">{{ cat.name }}</a></li>
+            {% endfor %}
+
+            <li><hr class="dropdown-divider"></li>
+            {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" style="color: firebrick;" href="{% url 'filmapp:add_product' %}">Add Movie</a></li>
+                    {% endif %}
+            </ul>
+          </li>
+
+        <div class="ac" style="margin-left: 600px; margin-top: 5px; background-color: lightgrey;">
+        <li class="nav-item dropdown {% if 'filmapp' in request.path %} active {% endif %}">
+            <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
+            </a>
+        <ul class="dropdown-menu" style="background-color: lightgrey;">
+          {% if user.is_authenticated %}
+                    <span class="dropdown-item" style="text-transform:none;">Hello {{ user.username }}</span>
+                    <li>
+                      {% if user.is_authenticated %}
+                        <a class="dropdown-item" style="text-transform:none;" href="{% url 'filmapp:edit_profile' %}">Edit Profile</a>
+                        {% endif %}
+                      </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" style="color: firebrick;" href="{% url 'authentication:logout' %}">Logout</a></li>
+            {% else %}
+            <li><a class="dropdown-item" style="color: black;" href="{% url 'authentication:reg' %}">Register</a></li>
+            <li><a class="dropdown-item" style="color: black;" href="{% url 'authentication:login' %}">Login</a></li>
+            {% endif %}
+          </ul>
+          </li>
+          {% if user.is_authenticated %}
+          {% endif %}
+        </div>
+        <br>
+        <li>
+            <a class="dropdown-item" style="margin-top: 4px; font-size: x-large;" href="#"><i class="fa-regular fa-heart"></i></a>
+          </li>
+          </ul>
+
+          <form class="d-flex" action="{% url 'searchapp:SearchResult' %}" method="get" style="padding: 5px; border-radius: 10px;">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search" style="background-color: ghostwhite; color: rgb(0, 0, 0); border-color: #000000;" autocomplete="off">
+            <button class="btn btn-outline-dark" type="submit" style="background-color: None"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </div>
+    </div>
+  </nav>

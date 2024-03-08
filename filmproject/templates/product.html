@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+      {{ product.description|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ product.name }} -  AV cinema
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class" style="margin-top: 60px;">
+  <div class="mx-auto">
+    <p style="margin-left:180px; color: ghostwhite; margin-left: 270px; margin-top: 10px;"><a href="{% url 'filmapp:allProdCat' %}" style="color: ghostwhite;">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+  </div>
+    <div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div style="min-width:18rem">
+            <img src="{{product.poster.url}}" alt="{{product.name}}" style="width: 400px; height: 500px; margin-bottom: 50px; border-radius: 10px; box-shadow: 0 0 10px rgb(245, 245, 245);">
+        </div>
+    </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6" style="color: ghostwhite;" >
+            <div style="flex: 0 0 48%; color:white;" >
+                <h1 style="margin-top: 0; color: #DE3163;">{{ product.name }}</h1>
+                <p>{{ product.category_id }}</p>
+                <p>Actors: {{ product.actors }}</p>
+                <p>{{ product.description }}</p>
+                <p>Release Date : {{ product.release_date }}</p>
+                <p><a class="btn btn-dark" href="{{ product.trailer_link }}" style="text-decoration: none; color: white;">Watch the Trailer</a></p>
+
+                {% if user == product.user %}
+                <a class="btn btn-success" href="{% url 'filmapp:edit_product' id=product.id %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'filmapp:delete_product' id=product.id %}">Delete</a>
+                {% endif %}
+                  
+                {% if user.is_authenticated %} <br><br>
+                <h3>Comments</h3>
+                <button type="button" style="color: black;" class="btn btn-secondary" onclick=window.location.href='{% url 'filmapp:add_comment' product_id=product.id %}'>Add Comment</button>
+                <br>
+                {% endif %}
+                 {% for comment in product.comment_set.all %}
+                <p>{{ comment.text }} - {{ comment.user.username }} at {{ comment.created_at }}</p>
+                {% endfor %}
+
+                {% if user.is_authenticated %}  
+                <h2>Ratings</h2>
+                <button type="button" style="color: black;" class="btn btn-secondary" onclick=window.location.href='{% url 'filmapp:add_rating' product_id=product.id %}'>Add Rating</button>
+                <br>
+                <p>Average Rating: {{ product.average_rating }}</p>
+                <p>Total Ratings: {{ product.total_ratings }}</p>
+                {% endif %}   
+
+
+           </div>
+    </div>
+</div>
+        {% endblock %}
+    </div>
+</div> 

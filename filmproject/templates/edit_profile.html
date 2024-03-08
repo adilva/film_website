@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="color:rgb(185, 67, 67); font-weight: lighter; margin-left: 10px; margin-top: 60px;">Edit Profile</h2>
+<form method="post" action="{% url 'filmapp:edit_profile'  %}" style="margin-left: 10px; color: ghostwhite; padding-bottom: 250px;">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-secondary" type="button" onclick=window.location.href='{% url 'filmapp:allProdCat' %}'>Save Changes</button>
+  <button class="btn btn-success" type="submit">Save</button>
+</form>
+{% endblock %}

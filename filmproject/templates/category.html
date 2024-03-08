@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+   {% if category %}
+      {{ category.description|truncatewords:155 }}
+   {% else %}
+       welcome to store where you can experience different tastes....
+   {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ category.name }} -  Borcelle
+    {% else %}
+         see our new collections - Borcelle
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% if category %}
+      <div style="margin-top: 60px;">
+        <div class="row my_row_class">
+            <div class="mx-auto">
+            <p class="text-center custom_a" ><a href="{% url 'filmapp:allProdCat' %}" class="custom_a" style="color:black;">Our Movie collections</a> </p>
+            </div>
+        </div>
+      </div>
+      
+      <div>
+             <h1 class="text-center my_title" style="color: firebrick;"><b>{{category.name}}</b></h1>
+             <p class="text-center">{{category.description}}</p>
+      </div>
+    {% else %}
+
+      <div class="my_image_padding" style="margin-top: 60px;">
+           <img src="{% static 'img/cinema1.jpg' %}" alt="our products" width="1300px" height="430px">
+      </div>
+      <br>
+      <div>
+         <h1 class="text-center my_title" style="color:ghostwhite; font-weight: lighter;">Our Movie Collections </h1>
+         <p class="text-center" style="color: ghostwhite; padding-left: 130px; padding-right: 130px; font-family:monospace;">A movie or film is a type of visual art that uses images and sounds to tell stories or teach people something. Most people watch movies to entertain themselves or to have fun. Some movies can make people laugh, but other movies can make them cry, or make them feel afraid.</p>
+      </div>
+    {% endif %}
+     <div class="containers">
+      <div class="row mx_auto" style="padding: 50px;">
+        {% for product in products %}
+           <div class="my_bottom_margin col-9 col-sm-4 col-md-4 xol-lg-4">
+           <div class="card text-center"  style="min-width:18rem; border-radius: 5px; box-shadow: 0 0 15px rgb(167, 32, 32); margin-bottom: 20px;">
+            {% if product.poster %}
+    <a href="{{ product.get_url }}">
+        <img class="card-img-top my_image" style="width:100%; height:500px; object-fit: cover;" src="{{ product.poster.url }}" alt="{{ product.name }}">
+    </a>
+{% else %}
+    <p>No poster available</p>
+{% endif %}
+           <div class="card-body">
+             <h4>{{product.name}}</h4>
+             <p>{{product.category_id}}</p>
+           </div>
+           </div>
+           </div>
+           
+           
+           {% endfor %} 
+          
+      </div>
+    </div>
+      <div> 
+           <div class="mx-auto">
+              {% if products.paginator.num_pages > 1 %}
+              <hr>
+              <div class="text-center">
+                  {% for pg in products.paginator.page_range %}
+                  <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}" style="margin-bottom:50px">{{pg}}</a>
+                  {% endfor %}
+              </div>
+              {% endif %}
+          </div> 
+           <br>
+      </div>
+      
+{% endblock %}  

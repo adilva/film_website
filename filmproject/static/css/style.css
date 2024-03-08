@@ -1,0 +1,51 @@
+.nav-item{
+    letter-spacing:.1em;
+    font-size: 14px;
+    text-transform:uppercase;
+ }
+
+ .dropdown-item{   
+    letter-spacing:.1em;
+    font-size: 14px;
+    text-transform:uppercase;
+ 
+ 
+ }
+ 
+ body{
+ font-family: 'Mutant', sans-serif;
+ 
+ }
+
+/* .my_image1{
+   width:1050px;
+   height:500px;
+   margin-left:130px;
+   margin-top:15px;
+ 
+} */
+
+/* .my_image_padding{
+   padding:50px;
+   width:350px;
+  
+} */
+
+.my_footer{
+    background-color: gray;
+    height: 90px;
+}
+ 
+.myFootericons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+ }
+.footer_p{
+    display: flex;
+    justify-content: center;
+    margin-left: 30px;
+    padding-top:30px;
+    font-size:14px;
+}
